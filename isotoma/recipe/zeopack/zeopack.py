@@ -16,6 +16,7 @@ import logging
 import sys
 import os
 import ConfigParser
+import optparse
 
 from ZEO.ClientStorage import ClientStorage
 from ZEO.Exceptions import ClientDisconnected
@@ -95,13 +96,21 @@ class Storage(object):
 
 
 def main(config):
-    # Setup logging
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(logging.Formatter("%(name)s %(levelname)s %(message)s"))
-    root = logging.getLogger()
-    root.addHandler(handler)
-    root.setLevel(logging.ERROR)
-    logger.setLevel(logging.DEBUG)
+    p = optparse.OptionParser()
+    p.add_option("-v", "--verbose", action="count")
+    p.add_option("-d", "--debug", action="store_true")
+    opts, args = p.parse_args()
+
+    log_level = logging.WARNING
+    if opts.verbose == 1:
+        log_level = logging.INFO
+    elif opts.verbose >= 2:
+        log_level = logging.DEBUG
+
+    logging.basicConfig(level=log_level)
+    if not opts.debug:
+        logging.getLogger().setLevel(logging.ERROR)
+        logger.setLevel(log_level)
 
     p = ConfigParser.ConfigParser()
     p.read(config)
