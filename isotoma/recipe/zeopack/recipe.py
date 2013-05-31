@@ -86,7 +86,7 @@ class Recipe(object):
                 p.set(part_name, "gc", part.get("pack-days", zeoserver.get("pack-days", "1")))
                 p.set(part_name, "rotation", part.get("pack-rotate-days", zeoserver.get("pack-rotate-days", "1")))
  
-            storages.append(part_name)
+                storages.append(part_name)
 
         p.set("zeopack", "storages", "\n".join(storages))
 
