@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.0.1 (unreleased)
+0.0.1 (2013-05-31)
 ------------------
 
 - Ensure that storages param is set correctly.
